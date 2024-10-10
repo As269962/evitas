@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Modificar Perfil</h1>
+        <form id="profile-form">
+            <label for="username">Nombre de Usuario:</label>
+            <input type="text" id="username" required>
+            
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" required>
+            
+            <button type="submit">Guardar Cambios</button>
+        </form>
+        <p><a href="publish.html">Publicar Producto</a></p>
+        <p><a href="index.html">Volver a Productos</a></p>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const savedUsername = localStorage.getItem('username');
+            document.getElementById('username').value = savedUsername;
+        };
+
+        document.getElementById('profile-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const newUsername = document.getElementById('username').value;
+            localStorage.setItem('username', newUsername);
+            alert('Perfil actualizado con éxito.');
+        });
+    </script>
+</body>
+</html>

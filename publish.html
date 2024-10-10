@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Producto</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Publicar Producto</h1>
+        <form id="publish-form">
+            <label for="product-name">Nombre del Producto:</label>
+            <input type="text" id="product-name" required>
+            
+            <label for="product-description">Descripción:</label>
+            <textarea id="product-description" required></textarea>
+            
+            <label for="product-image">Imagen del Producto:</label>
+            <input type="file" id="product-image" accept="image/*" onchange="previewImage(event)" required>
+            <img id="image-preview" src="" alt="Vista previa de la imagen" class="image-preview" style="display:none;">
+            
+            <button type="submit">Publicar</button>
+        </form>
+        <p><a href="profile.html">Modificar Perfil</a></p>
+        <p><a href="index.html">Volver a Productos</a></p>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const preview = document.getElementById('image-preview');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            };
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.getElementById('publish-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('product-name').value;
+            const description = document.getElementById('product-description').value;
+            const image = document.getElementById('image-preview').src;
+
+            const productData = { name, description, image };
+
+            try {
+                const response = await fetch('https:// 6708584c8e86a8d9e42eb94c .mockapi.io /api/v2 / :punto final', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(productData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la publicación del producto');
+                }
+
+                alert('Producto publicado con éxito.');
+                window.location.href = 'index.html'; 
+            } catch (error) {
+                console.error('Error:', error);
+                alert('No se pudo publicar el producto. Inténtalo de nuevo.');
+            }
+        });
+    </script>
+</body>
+</html>
